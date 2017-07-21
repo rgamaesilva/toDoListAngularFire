@@ -1,1 +1,10 @@
-<h1>Prezus</h1>
+<h1>Logged in as: {{auth.nomes[0]}}</h1>
+<table>
+  <tr ng-repeat="nome in auth.nomes">
+    <td><button ng-click="auth.countClicks()">{{nome}}</button></td>
+    <td ng-show="auth.even">EVEN</td>
+  </tr>
+</table>
+
+<input ng-model="auth.value" type="text">
+<h1>{{auth.value}}</h1>
