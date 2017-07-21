@@ -10,9 +10,9 @@
 
 		$stateProvider
 		.state('home', {
-				url: '/home',
-				controller: 'homeCtrl as home',
-				templateUrl: '/templates/home.html'
+			url: '/home',
+			controller: 'homeCtrl as home',
+			templateUrl: '/templates/home.html'
 		})
 		.state('login', {
 			url: '/login',

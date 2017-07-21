@@ -5,7 +5,7 @@
     console.log(auth);
     auth.myAlert = function(nome){
       alert(nome);
-    };
+    }
     auth.even = true;
   auth.countClicks = function(){
     if (auth.even) {

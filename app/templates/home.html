@@ -1,1 +1,10 @@
-<h1>Home Page</h1>
+<h1>{{home.title}}</h1>
+<table>
+  <tr ng-repeat="list in home.toDoList track by $index">
+    <td>{{list}}</td>
+    <td><button ng-click="home.removeItem($index)">REMOVE ITEM</button></td>
+  </tr>
+</table>
+
+<input ng-model="home.newToDoItem" type="text">
+<button ng-click="home.addNewItem(home.newToDoItem)">ADD ITEM</button></td>
