@@ -1,22 +1,27 @@
 (function(){
-  function homeCtrl(){
+  function homeCtrl(homeFactory){
     const home = this;
-    home.title = "Doing it all over again";
-    home.toDoList = [];
-    home.newToDoItem = "";
+
+    homeFactory.initializeApp(home);
+
     home.addNewItem = function(item) {
-      if(home.newToDoItem !== "") {
-        home.toDoList.push(item);
-        home.newToDoItem = "";
-      }
+      homeFactory.addNewItem(item, home);
     };
+
     home.removeItem = function(index) {
-      home.toDoList.splice(index, 1);
+      homeFactory.removeItem(index, home);
     }
+
+    home.removeAll = function() {
+      homeFactory.initializeApp(home);
+    };
+
+
+
   }
   angular
     .module('toDoList')
-    .controller('homeCtrl', [homeCtrl]);
+    .controller('homeCtrl', ['homeFactory', homeCtrl]);
 
 
 })();

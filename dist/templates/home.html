@@ -1,4 +1,3 @@
-<h1>{{home.title}}</h1>
 <table>
   <tr ng-repeat="list in home.toDoList track by $index">
     <td>{{list}}</td>
@@ -8,3 +7,4 @@
 
 <input ng-model="home.newToDoItem" type="text">
 <button ng-click="home.addNewItem(home.newToDoItem)">ADD ITEM</button></td>
+<button ng-click="home.removeAll()">Remove All</button></td>
