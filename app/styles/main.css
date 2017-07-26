@@ -1,0 +1,32 @@
+.tableHeader {
+  background-color: blue;
+  color: white;
+}
+
+table {
+  width: 100%;
+}
+
+.tableRow {
+  background-color: white;
+}
+
+.idRow  {
+  width: 10%;
+}
+
+.descriptionRow {
+  width: 40%;
+}
+
+.priorityRow {
+  width: 20%;
+}
+
+.statusRow {
+  width: 15%;
+}
+
+.actionsRow {
+  width: 15%;
+}

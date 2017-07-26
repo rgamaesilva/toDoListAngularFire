@@ -1,10 +1,40 @@
 <table>
-  <tr ng-repeat="list in home.toDoList track by $index">
-    <td>{{list}}</td>
-    <td><button ng-click="home.removeItem($index)">REMOVE ITEM</button></td>
+  <tr class="tableHeader">
+    <th class="idHeader">ID</th>
+    <th class="descriptionHeader">DESCRIPTION</th>
+    <th class="priorityHeader">PRIORITY</th>
+    <th class="statusHeader">STATUS</th>
+    <th class="actionsHeader">ACTIONS</th>
+  </tr>
+  <tr class="tableRow" ng-repeat="list in home.toDoList track by $index ">
+    <td class="idRow">{{list.id}}</td>
+    <td class="descriptionRow">
+      <input class="inputEdit" ng-model="home.toDoList[$index].description" ng-show="home.inputEdit[$index]">
+      <h3 class="pEdit" ng-model="home.toDoList[$index].description" ng-show="home.hEdit[$index]" ng-mouseover="home.increaseSize($index)" ng-mouseleave="home.decreaseSize($index)">{{list.description}}</h3>
+      <button class="editButton" ng-click="home.editDescription($index)" ng-show="home.editButton[$index]">Edit</button>
+      <button class="saveButton" ng-click="home.saveDescription($index)" ng-show="home.saveButton[$index]">Save</button>
+    </td>
+    <td class="priorityRow">{{list.priority}}
+      <select ng-model="home.toDoList[$index].priority" ng-change="home.changePriority($index)">
+        <option value="high">HIGH</option>
+        <option value="medium">MEDIUM</option>
+        <option value="low">LOW</option>
+      </select>
+    </td>
+    <td class="statusRow">{{list.status}}
+      <select ng-model="home.toDoList[$index].status" ng-change="home.changeStatus()">
+        <option value="incomplete">INCOMPLETE</option>
+        <option value="complete">COMPLETE</option>
+      </select>
+    </td>
+    <td class="actionsRow"><button ng-click="home.removeItem($index)">REMOVE ITEM</button></td>
   </tr>
 </table>
 
 <input ng-model="home.newToDoItem" type="text">
 <button ng-click="home.addNewItem(home.newToDoItem)">ADD ITEM</button></td>
 <button ng-click="home.removeAll()">Remove All</button></td>
+
+<!-- <div>{{list}}</div>
+<input ng-model="home.newTagItem" type="text">
+<button ng-click="home.addTag()">Get Pictures</button></td> -->
