@@ -1,8 +1,12 @@
 (function(){
-  function homeCtrl(homeFactory, $firebaseArray, $timeout){
+  function homeCtrl(homeFactory, $firebaseArray, $timeout, currentAuth, $firebaseAuth){
     const home = this;
-    const ref = firebase.database().ref();
-    home.toDoListFirebase = $firebaseArray(ref);
+
+    const userTaskRef = firebase.database().ref().child('users/' + currentAuth.uid + '/tasks');
+    // const messageRef = firebase.database().ref().child('users/' + currentAuth.uid + '/messages');
+    home.toDoListFirebase = $firebaseArray(userTaskRef);
+    home.userEmail = currentAuth.email;
+    home.firebaseAuth = $firebaseAuth();
 
     home.changeFirebasePriorityColor = function(index) {
       $timeout(function(){
@@ -27,19 +31,22 @@
           home.changeFirebasePriorityColor(i);
         }});
       console.log("INITIALIZED");
+
     };
 
     home.initializeApp();
 
     home.addRecordToFirebase = function(description) {
-      home.toDoListFirebase.$add({
-        description: description,
-        priority: "",
-        status: ""
-      }).then(function(results) {
-        home.newToDoItem = "";
-        console.log("ADDED");
-      });
+      if (home.newToDoItem !== ""){
+        home.toDoListFirebase.$add({
+          description: description,
+          priority: "",
+          status: ""
+        }).then(function(results) {
+          home.newToDoItem = "";
+          console.log("ADDED");
+        });
+      }
     };
 
     home.removeFirebaseItem = function(index) {
@@ -70,11 +77,15 @@
       for (let i=0 ; i < home.toDoListFirebase.length ; i++){
         home.toDoListFirebase.$remove(i);
       }
-    }; 
+    };
+
+    home.signOut = function() {
+      home.firebaseAuth.$signOut();
+    }
 
   }
   angular
     .module('toDoList')
-    .controller('homeCtrl', ['homeFactory','$firebaseArray', '$timeout', homeCtrl]);
+    .controller('homeCtrl', ['homeFactory','$firebaseArray', '$timeout', 'currentAuth', '$firebaseAuth', homeCtrl]);
 
 })();
