@@ -25,7 +25,7 @@
 	angular
 		//change appName here as well to
 		//match name on html tag in index.html
-		.module('toDoList', ['ui.router'])
+		.module('toDoList', ['ui.router', 'firebase'])
 		.config(config);
 
 

@@ -6,35 +6,33 @@
     <th class="statusHeader">STATUS</th>
     <th class="actionsHeader">ACTIONS</th>
   </tr>
-  <tr class="tableRow" ng-repeat="list in home.toDoList track by $index ">
+  <input class="inputEdit" ng-model="home.editField" ng-show="home.editingTask">
+  <button class="saveButton" ng-click="home.updateFirebaseDescription(home.editField, home.indexEdit)" ng-show="home.editingTask">Save</button>
+  <button class="saveButton" ng-click="home.editingTask = false" ng-show="home.editingTask">cancel</button>
+
+  <tr class="tableRow" ng-repeat="list in home.toDoListFirebase track by $index " ng-show="!home.editingTask">
     <td class="idRow">{{list.id}}</td>
     <td class="descriptionRow">
-      <input class="inputEdit" ng-model="home.toDoList[$index].description" ng-show="home.inputEdit[$index]">
-      <h3 class="pEdit" ng-model="home.toDoList[$index].description" ng-show="home.hEdit[$index]" ng-mouseover="home.increaseSize($index)" ng-mouseleave="home.decreaseSize($index)">{{list.description}}</h3>
-      <button class="editButton" ng-click="home.editDescription($index)" ng-show="home.editButton[$index]">Edit</button>
-      <button class="saveButton" ng-click="home.saveDescription($index)" ng-show="home.saveButton[$index]">Save</button>
+      <h3 class="pEdit">{{list.description}}</h3>
+      <button class="editButton" ng-click="home.editingTask = true; home.indexEdit = $index; home.editField = list.description">Edit</button>
     </td>
     <td class="priorityRow">{{list.priority}}
-      <select ng-model="home.toDoList[$index].priority" ng-change="home.changePriority($index)">
+      <select ng-model="home.changePriority[$index]" ng-change="home.updateFirebasePriority(home.changePriority[$index], $index); home.changeFirebasePriorityColor($index)">
         <option value="high">HIGH</option>
         <option value="medium">MEDIUM</option>
         <option value="low">LOW</option>
       </select>
     </td>
     <td class="statusRow">{{list.status}}
-      <select ng-model="home.toDoList[$index].status" ng-change="home.changeStatus()">
+      <select ng-model="home.changeStatus[$index]" ng-change="home.updateFirebaseStatus(home.changeStatus[$index], $index)">
         <option value="incomplete">INCOMPLETE</option>
         <option value="complete">COMPLETE</option>
       </select>
     </td>
-    <td class="actionsRow"><button ng-click="home.removeItem($index)">REMOVE ITEM</button></td>
+    <td class="actionsRow"><button ng-click="home.removeFirebaseItem($index)">REMOVE ITEM</button></td>
   </tr>
 </table>
 
 <input ng-model="home.newToDoItem" type="text">
-<button ng-click="home.addNewItem(home.newToDoItem)">ADD ITEM</button></td>
+<button ng-click="home.addRecordToFirebase(home.newToDoItem)">ADD ITEM</button></td>
 <button ng-click="home.removeAll()">Remove All</button></td>
-
-<!-- <div>{{list}}</div>
-<input ng-model="home.newTagItem" type="text">
-<button ng-click="home.addTag()">Get Pictures</button></td> -->
