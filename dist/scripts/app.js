@@ -16,17 +16,24 @@
 			resolve: {
         // controller will not be loaded until $requireSignIn resolves
         // Auth refers to our $firebaseAuth wrapper in the factory below
-        "currentAuth": ["authFactory", '$state', function(authFactory, $state) {
+        "currentAuth": ["authFactory", '$state', '$timeout' , function(authFactory, $state, $timeout) {
           // $requireSignIn returns a promise so the resolve waits for it to complete
           // If the promise is rejected, it will throw a $stateChangeError (see above)
+					var firebaseUser = authFactory.$getAuth();
+						//authFactory.$onAuthStateChanged(function(firebaseUser) {
+							if (!firebaseUser) {
+								console.log(firebaseUser)
+								$timeout(function(){
+									$state.go('login');
+								})
 
-					authFactory.$onAuthStateChanged(function(firebaseUser) {
-          	if (!firebaseUser) {
-							$state.go('login');
-						}
+							} else {
+								console.log('firebaseUser')
+								return firebaseUser;
+							}
+						//});
 
-					});
-					return authFactory.$requireSignIn();
+
         }]
       }
 
