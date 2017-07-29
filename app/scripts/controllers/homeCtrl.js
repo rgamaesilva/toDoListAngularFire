@@ -1,5 +1,5 @@
 (function(){
-  function homeCtrl(homeFactory, $firebaseArray, $timeout, currentAuth, $firebaseAuth){
+  function homeCtrl(homeFactory, $firebaseArray, $timeout, currentAuth, $firebaseAuth, $state){
     const home = this;
 
     const userTaskRef = firebase.database().ref().child('users/' + currentAuth.uid + '/tasks');
@@ -80,12 +80,14 @@
     };
 
     home.signOut = function() {
-      home.firebaseAuth.$signOut();
+      home.firebaseAuth.$signOut().then(function(){
+        $state.go('login');
+      });
     }
 
   }
   angular
     .module('toDoList')
-    .controller('homeCtrl', ['homeFactory','$firebaseArray', '$timeout', 'currentAuth', '$firebaseAuth', homeCtrl]);
+    .controller('homeCtrl', ['homeFactory','$firebaseArray', '$timeout', 'currentAuth', '$firebaseAuth', '$state', homeCtrl]);
 
 })();
